@@ -144,11 +144,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 <div class="row">
     <div class="col-md-12">
         <form class="form-inline" method="post" action="{{ url('admin_product_product_class', {id : Product.id}) }}">
-            <div class="box">
-                <div class="box-header">
+            <div id="product_box" class="box">
+                <div id="product_box__head" class="box-header">
                     商品名 : <h3 class="box-title">{{ Product.name }}</h3>
                 </div><!-- /.box-header -->
-                <div class="box-body" style="padding-bottom: 30px;">
+                <div id="product_box__body" class="box-body" style="padding-bottom: 30px;">
                     {% if not_product_class  %}
                         {{ form_widget(form._token) }}
                         <button type="submit" class="btn btn-primary pull-right">商品規格の設定</button>
@@ -182,56 +182,56 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     <div class="col-md-12">
         <div class="box">
             {% if classForm.product_classes|length > 0 and has_class_category_flg %}
-            <div class="box-header">
-                <button type="button" id="copy" class="btn btn-default pull-right btn-xs">1行目のデータをコピーする</button>
+            <div id="product_search__head" class="box-header">
+                <button id="product_box_copy" type="button" id="copy" class="btn btn-default pull-right btn-xs">1行目のデータをコピーする</button>
                 <h3 class="box-title">検索結果 <span class="normal"><strong>{{ classForm.product_classes|length }} 件</strong> が該当しました</span></h3>
                 {% if error is not null %}
                     <div class="text-danger">{{ error.message }}</div>
                 {% endif %}
             </div><!-- /.box-header -->
-            <div class="box-body no-padding">
+            <div id="product_class_list" class="box-body no-padding">
                 <div class="table_list">
                     <div class="table-responsive with-border table-menu table-responsive-overflow">
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th class="text-center">登録<input id="add-all" type="checkbox" value="0"></th>
-                                    <th>規格1</th>
-                                    <th>規格2</th>
-                                    <th>商品コード</th>
-                                    <th>在庫数</th>
-                                    <th>販売制限数</th>
-                                    <th>通常価格(円)</th>
-                                    <th>販売価格(円)</th>
+                                <tr id="product_class_list__head">
+                                    <th id="product_class_list__head__regist" class="text-center">登録<input id="add-all" type="checkbox" value="0"></th>
+                                    <th id="product_class_list__head__class_category1">規格1</th>
+                                    <th id="product_class_list__head__class_category2">規格2</th>
+                                    <th id="product_class_list__head__code">商品コード</th>
+                                    <th id="product_class_list__head__stock">在庫数</th>
+                                    <th id="product_class_list__head__sale_limit">販売制限数</th>
+                                    <th id="product_class_list__head__price01">通常価格(円)</th>
+                                    <th id="product_class_list__head__price02">販売価格(円)</th>
                                     {% if BaseInfo.option_product_delivery_fee %}
-                                    <th>送料</th>
+                                    <th id="product_class_list__head__delivery_fee">送料</th>
                                     {% endif %}
-                                    <th>お届け可能日</th>
+                                    <th id="product_class_list__head__delivery_date">お届け可能日</th>
                                     {% if BaseInfo.option_product_tax_rule %}
-                                    <th>販売税率</th>
+                                    <th id="product_class_list__head__tax_rate">販売税率</th>
                                     {% endif %}
-                                    <th>商品種別</th>
+                                    <th id="product_class_list__head__product_type">商品種別</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {% for product_class_form in classForm.product_classes %}
                             <tr>
-                                <td class="text-center">
+                                <td id="product_class_list__head__regist--{{ loop.index }}" class="text-center">
                                     {{ form_widget(product_class_form.add) }}
                                 </td>
-                                <td>
+                                <td id="product_class_list__body__class_category1--{{ loop.index }}">
                                     {{ product_class_form.vars.value.ClassCategory1 }}
                                     {{ form_widget(product_class_form.ClassCategory1) }}
                                 </td>
-                                <td>
+                                <td id="product_class_list__body__class_category2--{{ loop.index }}">
                                     {{ product_class_form.vars.value.ClassCategory2 }}
                                     {{ form_widget(product_class_form.ClassCategory2) }}
                                 </td>
-                                <td>
+                                <td id="product_class_list__body__code--{{ loop.index }}">
                                     {{ form_widget(product_class_form.code) }}
                                     {{ form_errors(product_class_form.code) }}
                                 </td>
-                                <td>
+                                <td id="product_class_list__body__stock--{{ loop.index }}">
                                     {% if  product_class_form.vars.value.stock_unlimited %}
                                     {# 在庫無制限時のdisable #}
                                     {% endif %}
@@ -240,35 +240,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                     {{ form_widget(product_class_form.stock_unlimited) }}
                                     {{ form_errors(product_class_form.stock_unlimited) }}
                                 </td>
-                                <td>
+                                <td id="product_class_list__body__sale_limit--{{ loop.index }}">
                                     {{ form_widget(product_class_form.sale_limit) }}
                                     {{ form_errors(product_class_form.sale_limit) }}
                                 </td>
-                                <td class="price_cell">
+                                <td id="product_class_list__body__price01--{{ loop.index }}" class="price_cell">
                                     {{ form_widget(product_class_form.price01, {'attr': {'class': 'notmoney'}}) }}
                                     {{ form_errors(product_class_form.price01) }}
                                 </td>
-                                <td class="price_cell">
+                                <td id="product_class_list__body__price02--{{ loop.index }}" class="price_cell">
                                     {{ form_widget(product_class_form.price02, {'attr': {'class': 'notmoney'}}) }}
                                     {{ form_errors(product_class_form.price02) }}
                                 </td>
                                 {% if BaseInfo.option_product_delivery_fee %}
-                                <td>
+                                <td id="product_class_list__body__delivery_fee--{{ loop.index }}">
                                     {{ form_widget(product_class_form.delivery_fee, {'attr': {'class': 'notmoney'}}) }}
                                     {{ form_errors(product_class_form.delivery_fee) }}
                                 </td>
                                 {% endif %}
-                                <td>
+                                <td id="product_class_list__body__delivery_date--{{ loop.index }}">
                                     {{ form_widget(product_class_form.delivery_date) }}
                                     {{ form_errors(product_class_form.delivery_date) }}
                                 </td>
                                 {% if BaseInfo.option_product_tax_rule %}
-                                <td>
+                                <td id="product_class_list__body__tax_rate--{{ loop.index }}">
                                     {{ form_widget(product_class_form.tax_rate) }}
                                     {{ form_errors(product_class_form.tax_rate) }}
                                 </td>
                                 {% endif %}
-                                <td>
+                                <td id="product_class_list__body__product_type--{{ loop.index }}">
                                     {{ form_widget(product_class_form.product_type) }}
                                     {{ form_errors(product_class_form.product_type) }}
                                 </td>
@@ -280,7 +280,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 </div>
             </div><!-- /.box-body -->
             {% else %}
-            <div class="box-header">
+            <div id="product_class__header_error" class="box-header">
                 <h3 class="box-title">検索条件に該当するデータがありませんでした。</h3>
             </div><!-- /.box-header -->
             {% endif %}
@@ -289,10 +289,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 </div>
 
 {% if classForm.product_classes|length > 0 and has_class_category_flg %}
-<div class="row">
+<div id="product_class__button_area" class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 text-center btn_area">
 {% if not_product_class  %}
-        <button type="submit" class="btn btn-primary btn-lg btn-block" name="mode" value="edit">登録</button>
+        <button id="regist" type="submit" class="btn btn-primary btn-lg btn-block" name="mode" value="edit">登録</button>
 {% else %}
         <input id="mode" type="hidden" name="mode">
         <button type="submit" class="btn btn-primary btn-lg btn-block" name="mode" value="update">更新</button>
