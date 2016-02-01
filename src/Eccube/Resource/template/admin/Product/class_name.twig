@@ -78,10 +78,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% endblock %}
 
 {% block main %}
-    <div class="row">
+    <div id="class_name" class="row">
         <div class="col-md-12">
-            <div class="box">
-                <div class="box-header">
+            <div id="class_name_content" class="box">
+                <div id="class_name_content__head" class="box-header">
                     <div class="form-inline">
                         <form role="form" class="form-horizontal" name="form1" id="form1" method="post" action="{% if TargetClassName.id %}{{ path('admin_product_class_name_edit', {id: TargetClassName.id}) }}{% else %}{{ url('admin_product_class_name') }}{% endif %}">
                             {{ form_widget(form._token) }}
@@ -92,22 +92,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     </div>
                 </div><!-- /.box-header -->
                 {% if ClassNames|length > 0 %}
-                    <div class="box-body no-padding no-border">
+                    <div id="class_name_list" class="box-body no-padding no-border">
                         <div class="sortable_list">
                             <div class="tableish">
 
                                 {% for ClassName in ClassNames %}
 
-                                    <div class="item_box tr" data-class-name-id="{{ ClassName.id }}" data-rank="{{ ClassName.rank }}">
+                                    <div id="class_name_list__body__{{ ClassName.id }}" class="item_box tr" data-class-name-id="{{ ClassName.id }}" data-rank="{{ ClassName.rank }}">
                                         <div class="icon_sortable td">
                                             <svg class="cb cb-ellipsis-v"> <use xlink:href="#cb-ellipsis-v" /></svg>
                                         </div>
-                                        <div class="item_pattern td">
+                                        <div id="class_name_list__title__{{ ClassName.id }}" class="item_pattern td">
                                             <a href="{{ url('admin_product_class_category', {class_name_id : ClassName.id }) }}">
                                                 {{ ClassName.name }} ({{ ClassName.ClassCategories|length }})
                                             </a>
                                         </div>
-                                        <div class="icon_edit td">
+                                        <div id="class_name_list__edit__{{ ClassName.id }}" class="icon_edit td">
                                             <div class="dropdown">
                                                 <a class="dropdown-toggle" data-toggle="dropdown"><svg class="cb cb-ellipsis-h"> <use xlink:href="#cb-ellipsis-h" /></svg></a>
                                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -141,7 +141,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         </div>
                     </div><!-- /.box-body -->
                 {% else %}
-                    <div class="box-body no-padding">
+                    <div id="class_name_list" class="box-body no-padding">
                         <div class="data-empty"><svg class="cb cb-inbox"> <use xlink:href="#cb-inbox" /></svg><p>データはありません</p></div>
                     </div><!-- /.box-body -->
                 {% endif %}
