@@ -93,10 +93,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% block main %}
     <div id="category" class="row">
         <div class="col-md-9">
-            <div id="category_content" class="box">
-                <div id="category_content__head" class="box-header">
-                    <div class="box-title box-title-category">
-                        <a href="{{ url('admin_product_category') }}">全カテゴリー</a>
+            <div id="category_box" class="box">
+                <div id="category_box__head" class="box-header">
+                    <div id="category_box__link_product_category" class="box-title box-title-category">
+                        <a id="link__product_category" href="{{ url('admin_product_category') }}">全カテゴリー</a>
                         {% for ParentCategory in TargetCategory.path %}
                             {% if ParentCategory.id is not null %}
                             &nbsp;<svg class="cb cb-angle-right"> <use xlink:href="#cb-angle-right" /></svg>&nbsp;<a href="{{ url('admin_product_category_show', { parent_id : ParentCategory.id }) }}">{{ ParentCategory.name }}</a>
@@ -104,23 +104,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         {% endfor %}
                     </div>
                 </div>
-                <div id="category_content__body" class="box-body">
-                    <div class="row">
-                        <div id="category_form" class="form-inline col-md-9">
+                <div id="category_box__body" class="box-body">
+                    <div id="category_box__menu" class="row">
+                        <div id="category_box__button_area_category_new" class="form-inline col-md-9">
                             {% if TargetCategory.level < app.config.category_nest_level %}
                             <form role="form" class="form-horizontal" name="form1" id="form1" method="post" action="{% if TargetCategory.id %}{{ path('admin_product_category_edit', {id: TargetCategory.id}) }}{% elseif Parent %}{{ url('admin_product_category_show', {'parent_id': Parent.id}) }}{% else %}{{ url('admin_product_category') }}{% endif %}" enctype="multipart/form-data">
                                 {{ form_widget(form._token) }}
                                 {{ form_widget(form.name, {attr: {placeholder: 'カテゴリ名を入力'}}) }}
                                 {{ form_errors(form.name) }}
-                                <button class="btn btn-default btn-sm" type="submit">カテゴリ作成</button>
+                                <button id="button__category_new" class="btn btn-default btn-sm" type="submit">カテゴリ作成</button>
                             </form>
                             {% endif %}
                         </div>
-                        <div id="category_csv" class="dl_dropdown col-md-3">
+                        <div id="category_box__csv_menu" class="dl_dropdown col-md-3">
                             <div class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">CSVダウンロード<svg class="cb cb-angle-down icon_down"><use xlink:href="#cb-angle-down"/></svg></a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="{{ url('admin_product_category_export') }}">CSVダウンロード</a></li>
-                                    <li><a href="{{ url('admin_setting_shop_csv', { id : constant('\\Eccube\\Entity\\Master\\CsvType::CSV_TYPE_CATEGORY') }) }}">出力項目設定</a></li>
+                                    <li id="category_box__link_product_category_export"><a id="link__product_category_export" href="{{ url('admin_product_category_export') }}">CSVダウンロード</a></li>
+                                    <li id="category_box__link_product_category_setting_shop_csv"><a id="link__product_category_setting_shop_csv" href="{{ url('admin_setting_shop_csv', { id : constant('\\Eccube\\Entity\\Master\\CsvType::CSV_TYPE_CATEGORY') }) }}">出力項目設定</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -133,28 +133,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
                                 {% for Category in Categories %}
 
-                                <div id="category_list__body__{{ Category.id }}" class="item_box tr" data-rank="{{ Category.rank }}" data-category-id="{{ Category.id }}">
+                                <div id="category_list__item--{{ Category.id }}" class="item_box tr" data-rank="{{ Category.rank }}" data-category-id="{{ Category.id }}">
                                     <div class="icon_sortable td">
                                         <svg class="cb cb-ellipsis-v"> <use xlink:href="#cb-ellipsis-v" /></svg>
                                     </div>
-                                    <div id="category_list__title__{{ Category.id }}" class="item_pattern td">
+                                    <div id="category_list__name--{{ Category.id }}" class="item_pattern td">
                                         <a href="{{ url('admin_product_category_show',  { parent_id : Category.id }) }}">{{ Category.name }}</a>
                                     </div>
-                                    <div id="category_list__edit__{{ Category.id }}" class="icon_edit td">
+                                    <div id="category_list__menu--{{ Category.id }}" class="icon_edit td">
                                         <div class="dropdown">
                                             <a class="dropdown-toggle" data-toggle="dropdown"><svg class="cb cb-ellipsis-h"> <use xlink:href="#cb-ellipsis-h" /></svg></a>
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 {% if Category.id != TargetCategory.id %}
-                                                    <li><a href="{{ url('admin_product_category_edit', {id: Category.id}) }}">編集</a></li>
+                                                    <li id="category_list__link_product_category_edit--{{ Category.id }}_enable"><a id="link__product_category_edit--{{ Category.id }}_enable" href="{{ url('admin_product_category_edit', {id: Category.id}) }}">編集</a></li>
                                                 {% else %}
-                                                    <li><a>編集中</a></li>
+                                                    <li id="category_list__link_product_category_edit--{{ Category.id }}_disable"><a id="link__product_category_edit--{{ Category.id }}_disable">編集中</a></li>
                                                 {% endif %}
 
                                                 {% if Category.Children|length > 0 or Category.ProductCategories|length > 0 %}
-                                                    <li><a title="子カテゴリが存在するため削除できません。">削除</a></li>
+                                                    <li id="category_list__link_product_category_delete--{{ Category.id }}_disable"><a id="link__product_category_delete--{{ Category.id }}_disable" title="子カテゴリが存在するため削除できません。">削除</a></li>
                                                 {% else %}
-                                                    <li>
-                                                        <a href="{{ url('admin_product_category_delete', {id: Category.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete">
+                                                    <li id="category_list__link_product_category_delete--{{ Category.id }}_enable">
+                                                        <a id="link__product_category_delete--{{ Category.id }}_enable" href="{{ url('admin_product_category_delete', {id: Category.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete">
                                                             削除
                                                         </a>
                                                     </li>
@@ -170,7 +170,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         </div>
                     </div><!-- /.box-body -->
             {% else %}
-                <div id="category_list" class="box-body no-padding">
+                <div id="category_list__errror" class="box-body no-padding">
                     <div class="data-empty"><svg class="cb cb-inbox"> <use xlink:href="#cb-inbox" /></svg><p>データはありません</p></div>
                 </div><!-- /.box-body -->
             {% endif %}
@@ -180,14 +180,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
         {% macro tree(Category, TargetId, level) %}
             {% set level = level + 1 %}
-            <li class="level{{ level }} {% if Category.id == TargetId %}active{% endif %}">
+            <li id="category__link_product_category_show" class="level{{ level }} {% if Category.id == TargetId %}active{% endif %}">
                 <svg class="cb cb-plus-square"> <use xlink:href="{% if Category.children|length > 0 %}#cb-plus-square{% else %}#cb-minus-square{% endif %}" /></svg>
-                <a href="{{ url('admin_product_category_show', { parent_id : Category.id }) }}">
+                <a id="link__product_category_show" href="{{ url('admin_product_category_show', { parent_id : Category.id }) }}">
                     {{ Category.name }} ({{ Category.children|length }})
                 </a>
                 {% if Category.children|length > 0 %}
                     {% for ChildCategory in Category.children %}
-                        <ul>
+                        <ul id="category_child__link_product_category_show--{{ loop.index }}">
                             {{ _self.tree(ChildCategory, TargetId, level) }}
                         </ul>
                     {% endfor %}
@@ -195,13 +195,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             </li>
         {% endmacro %}
 
-        <div id="category_tree" class="col-md-3" id="aside_column">
+        <div class="col-md-3" id="aside_column">
             <div class="col_inner">
 
-                <div class="box no-header">
-                    <div class="box-body">
+                <div id="category_tree__box" class="box no-header">
+                    <div id="category_tree__body" class="box-body">
                         <div class="tree">
-                            <p  id="category_tree__name" class="{% if Parent is null %}active{% endif %}"><a href="{{ url('admin_product_category') }}">全カテゴリー</a></p>
+                            <p id="category_tree__link_tree_product_category"  class="{% if Parent is null %}active{% endif %}"><a id="link__tree_product_category" href="{{ url('admin_product_category') }}">全カテゴリー</a></p>
                             <ul id="category_tree">
                                 {% for TopCategory in TopCategories %}
                                     {{ _self.tree(TopCategory, TargetCategory.Parent.id | default(null), 0)}}

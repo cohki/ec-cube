@@ -80,52 +80,52 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% block main %}
     <div id="class_name" class="row">
         <div class="col-md-12">
-            <div id="class_name_content" class="box">
-                <div id="class_name_content__head" class="box-header">
-                    <div class="form-inline">
+            <div id="class_name_box" class="box">
+                <div id="class_name_box__head" class="box-header">
+                    <div id="class_name_box__button_class_name_new" class="form-inline">
                         <form role="form" class="form-horizontal" name="form1" id="form1" method="post" action="{% if TargetClassName.id %}{{ path('admin_product_class_name_edit', {id: TargetClassName.id}) }}{% else %}{{ url('admin_product_class_name') }}{% endif %}">
                             {{ form_widget(form._token) }}
                             {{ form_widget(form.name, {attr: {placeholder: '規格名を入力'}}) }}
                             {{ form_errors(form.name) }}
-                            <button class="btn btn-default btn-sm" type="submit">規格作成</button>
+                            <button id="button__class_name_new" class="btn btn-default btn-sm" type="submit">規格作成</button>
                         </form>
                     </div>
                 </div><!-- /.box-header -->
                 {% if ClassNames|length > 0 %}
-                    <div id="class_name_list" class="box-body no-padding no-border">
-                        <div class="sortable_list">
+                    <div id="class_name_box__body" class="box-body no-padding no-border">
+                        <div id="class_name__list" class="sortable_list">
                             <div class="tableish">
 
                                 {% for ClassName in ClassNames %}
 
-                                    <div id="class_name_list__body__{{ ClassName.id }}" class="item_box tr" data-class-name-id="{{ ClassName.id }}" data-rank="{{ ClassName.rank }}">
+                                    <div id="class_name_list__item--{{ ClassName.id }}" class="item_box tr" data-class-name-id="{{ ClassName.id }}" data-rank="{{ ClassName.rank }}">
                                         <div class="icon_sortable td">
                                             <svg class="cb cb-ellipsis-v"> <use xlink:href="#cb-ellipsis-v" /></svg>
                                         </div>
-                                        <div id="class_name_list__title__{{ ClassName.id }}" class="item_pattern td">
-                                            <a href="{{ url('admin_product_class_category', {class_name_id : ClassName.id }) }}">
+                                        <div id="class_name_list__name--{{ ClassName.id }}" class="item_pattern td">
+                                            <a id="link__product_class_category" href="{{ url('admin_product_class_category', {class_name_id : ClassName.id }) }}">
                                                 {{ ClassName.name }} ({{ ClassName.ClassCategories|length }})
                                             </a>
                                         </div>
-                                        <div id="class_name_list__edit__{{ ClassName.id }}" class="icon_edit td">
+                                        <div id="class_name_list__edit_menu--{{ ClassName.id }}" class="icon_edit td">
                                             <div class="dropdown">
                                                 <a class="dropdown-toggle" data-toggle="dropdown"><svg class="cb cb-ellipsis-h"> <use xlink:href="#cb-ellipsis-h" /></svg></a>
                                                 <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li>
-                                                        <a href="{{ url('admin_product_class_category', {class_name_id : ClassName.id }) }}">
+                                                    <li id="class_name_list__link_edit_menu_product_class_category--{{ ClassName.id }}">
+                                                        <a id="link__menu_product_class_category--{{ ClassName.id }}" href="{{ url('admin_product_class_category', {class_name_id : ClassName.id }) }}">
                                                             分類登録
                                                         </a>
                                                     </li>
 
                                                     {% if ClassName.id != TargetClassName.id %}
-                                                        <li><a href="{{ url('admin_product_class_name_edit', {id: ClassName.id}) }}">編集</a></li>
+                                                        <li id="class_name_list__link_product_class_name_edit-{{ ClassName.id }}_enable"><a id="link__product_class_name_edit-{{ ClassName.id }}_enable" href="{{ url('admin_product_class_name_edit', {id: ClassName.id}) }}">編集</a></li>
                                                     {% else %}
-                                                        <li><a>編集中</a></li>
+                                                        <li id="class_name_list__link_product_class_name_edit-{{ ClassName.id }}_disable"><a id="link__product_class_name_edit-{{ ClassName.id }}_disable">編集中</a></li>
                                                     {% endif %}
 
                                                     {% if ClassName.ClassCategories|length == 0 %}
-                                                        <li>
-                                                            <a href="{{ url('admin_product_class_name_delete', {id: ClassName.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete">
+                                                        <li id="class_name_list__link_product_class_name_delete--{{ ClassName.id }}">
+                                                            <a id="link__product_class_name_delete--{{ ClassName.id }}" href="{{ url('admin_product_class_name_delete', {id: ClassName.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete">
                                                                 削除
                                                             </a>
                                                         </li>
@@ -141,7 +141,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         </div>
                     </div><!-- /.box-body -->
                 {% else %}
-                    <div id="class_name_list" class="box-body no-padding">
+                    <div id="class_name_box__body_error" class="box-body no-padding">
                         <div class="data-empty"><svg class="cb cb-inbox"> <use xlink:href="#cb-inbox" /></svg><p>データはありません</p></div>
                     </div><!-- /.box-body -->
                 {% endif %}

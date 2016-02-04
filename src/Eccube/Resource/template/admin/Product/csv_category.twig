@@ -68,25 +68,25 @@ $(function() {
     <div class="col-md-12">
         <form id="upload-form" class="form-inline" method="post" action="{{ url('admin_product_category_csv_import') }}" {{ form_enctype(form) }}>
             {{ form_widget(form._token) }}
-            <div id="category_csv_upload__box" class="box">
-                <div id="category_csv_header" class="box-header">
+            <div id="category_csv_upload_box" class="box">
+                <div id="category_csv_upload_box__header" class="box-header">
                     <h3 class="box-title">カテゴリ登録CSV</h3>
                 </div><!-- /.box-header -->
-                <div id="category_csv_body" class="box-body">
-                    <div class="form-group">
-                        <label id="category_csv_body__label" class="col-sm-5 control-label">CSVファイル選択</label>
-                        <div id="category_csv_body__file" class="col-sm-7">
+                <div id="category_csv_upload_box__body" class="box-body">
+                    <div id="category_csv_box__import_file" class="form-group">
+                        <label class="col-sm-5 control-label">CSVファイル選択</label>
+                        <div class="col-sm-7">
                             {{ form_widget(form.import_file, {'attr': {'accept': 'text/csv,text/tsv'}}) }}
                             {{ form_errors(form.import_file) }}
                         </div>
                         {% for error in errors %}
-                            <div id="category_csv_body__error" class="text-danger">{{ error.message }}</div>
+                            <div id="category_csv_box__error--{{ loop.index }}" class="text-danger">{{ error.message }}</div>
                         {% endfor %}
                     </div>
                     <div id="spinner"></div>
                 </div><!-- /.box-body -->
                 <div id="category_csv_upload__button_area" class="box-footer text-center">
-                    <button id="upload-button" type="submit" class="btn btn-primary btn-sm">CSVファイルのアップロード</button>
+                    <button id="upload__button" type="submit" class="btn btn-primary btn-sm">CSVファイルのアップロード</button>
                 </div><!-- /.box-footer -->
             </div><!-- /.box -->
         </form>
@@ -95,27 +95,27 @@ $(function() {
 
 <div id="category_csv_file_format" class="row">
     <div class="col-md-12">
-        <div class="box">
-            <div id="category_csv_file_format__head" class="box-header">
-                <a href="{{ url('admin_product_csv_template', {'type': 'category'}) }}" id="download-button" class="btn btn-default pull-right btn-xs">雛形ファイルダウンロード</a>
+        <div id="category_csv_file_format_box" class="box">
+            <div id="category_csv_file_format_box__header" class="box-header">
+                <a id="link__product_csv_template" href="{{ url('admin_product_csv_template', {'type': 'category'}) }}" id="download-button" class="btn btn-default pull-right btn-xs">雛形ファイルダウンロード</a>
                 <h3 class="box-title">カテゴリ登録CSVファイルフォーマット</h3>
             </div><!-- /.box-header -->
-            <div id="category_csv_file_format__body" class="box-body no-padding">
-                <div class="table_list">
+            <div id="category_csv_file_format_box__body" class="box-body no-padding">
+                <div id="category_csv_file_format_list" class="table_list">
                     <div class="table-responsive no-border table-menu table-responsive-overflow">
                         <table class="table table-striped">
                             <thead>
-                                <tr id="file_format__head" class="text-nowrap">
+                                <tr id="category_csv_file_format_list__header" class="text-nowrap">
                                     {% for header in headers|keys %}
-                                        <th>{{ header }}</th>
+                                        <th id="category_csv_file_format_list__header--{{ loop.index }}">{{ header }}</th>
                                     {% endfor %}
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr id="file_format__body" class="text-nowrap">
-                                    <td>新規登録時は未設定<br>既存カテゴリの更新はカテゴリIDを設定</td>
-                                    <td>必須</td>
-                                    <td></td>
+                                <tr id="category_csv_file_format_list__body" class="text-nowrap">
+                                    <td id="category_csv_file_format_list__id">新規登録時は未設定<br>既存カテゴリの更新はカテゴリIDを設定</td>
+                                    <td id="category_csv_file_format_list__name">必須</td>
+                                    <td id="category_csv_file_format_list__parent_id"></td>
                                 </tr>
                             </tbody>
                         </table>

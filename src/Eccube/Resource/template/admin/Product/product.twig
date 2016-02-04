@@ -358,8 +358,8 @@ function fnClass(action) {
                     </div>
 
                     <div id="product_edit__link" class="row hidden-xs hidden-sm">
-                        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 text-center btn_area">
-                            <p><a id="link-back" href="{{ url('admin_product') }}">検索画面に戻る</a></p>
+                        <div id="product_edit__link_product_back"class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 text-center btn_area">
+                            <p><a id="link__product_back" href="{{ url('admin_product') }}">検索画面に戻る</a></p>
                         </div>
                     </div>
 
@@ -378,18 +378,18 @@ function fnClass(action) {
                                     </div>
                                 </div>
                                 <div id="product_edit_aside_column__button_confirm" class="row text-center">
-                                    <div class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
-                                        <button id="button__confirm" type="submit" class="btn btn-primary btn-block btn-lg prevention-btn prevention-mask" >商品を登録</button>
+                                    <div id="product_edit_aside_column__button_product_edit_confirm" class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
+                                        <button id="button__product_edit_confirm" type="submit" class="btn btn-primary btn-block btn-lg prevention-btn prevention-mask" >商品を登録</button>
                                     </div>
                                 </div>
                                 <div id="product_edit_aside_column__button_class" class="row text-center with-border">
-                                    <div class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
+                                    <div id="product_edit_aside_column__button_product_edit_class"  class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
                                         {% if id is null %}
-                                            <button id="product_edit_aside_column__button_class--disable" class="btn btn-default btn-block btn-sm" disabled>
+                                            <button id="button__product_edit_class--disable" class="btn btn-default btn-block btn-sm" disabled>
                                                 規格設定
                                             </button>
                                         {% else %}
-                                            <button id="product_edit_aside_column__button_class--enable" class="btn btn-default btn-block btn-sm" onclick="fnClass('{{ url('admin_product_product_class', { 'id' : id }) }}');return false;">
+                                            <button id="button__product_edit_class--enable" class="btn btn-default btn-block btn-sm" onclick="fnClass('{{ url('admin_product_product_class', { 'id' : id }) }}');return false;">
                                                 規格設定
                                             </button>
                                         {% endif %}
@@ -399,34 +399,34 @@ function fnClass(action) {
                                     <div class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
                                         <ul class="col-3">
                                             {% if id is null %}
-                                                <li>
-                                                    <button id="product_edit_aside_column__button_menu_display--disable" class="btn btn-default btn-block btn-sm" disabled>
+                                                <li id="product_edit_aside_column__button_menu_display--disable" >
+                                                    <button id="button__menu_display--disable" class="btn btn-default btn-block btn-sm" disabled>
                                                         確認
                                                     </button>
                                                 </li>
-                                                <li>
-                                                    <button id="product_edit_aside_column__button_menu_copy--disable" class="btn btn-default btn-block btn-sm" disabled>
+                                                <li id="product_edit_aside_column__button_menu_copy--disable">
+                                                    <button id="button__menu_copy--disable" class="btn btn-default btn-block btn-sm" disabled>
                                                         複製
                                                     </button>
                                                 </li>
-                                                <li>
-                                                    <button id="product_edit_aside_column__button_menu_delete--disable" class="btn btn-default btn-block btn-sm" disabled>
+                                                <li id="product_edit_aside_column__button_menu_delete--disable">
+                                                    <button id="button__menu_delete--disable" class="btn btn-default btn-block btn-sm" disabled>
                                                         削除
                                                     </button>
                                                 </li>
                                             {% else %}
-                                                <li>
-                                                    <a id="product_edit_aside_column__button_menu_display--enable" class="btn btn-default btn-block btn-sm" href="{{ url('admin_product_product_display', {'id' : id}) }}" target="_blank">
+                                                <li id="product_edit_aside_column__button_menu_display--enable">
+                                                    <a id="button__menu_display--enable" class="btn btn-default btn-block btn-sm" href="{{ url('admin_product_product_display', {'id' : id}) }}" target="_blank">
                                                         確認
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <button id="product_edit_aside_column__button_menu_copy--enable" class="btn btn-default btn-block btn-sm" onclick="fnCopy('{{ url('admin_product_product_copy', {'id' : id}) }}');return false;">
+                                                <li id="product_edit_aside_column__button_menu_copy--enable" >
+                                                    <button id="button__menu_copy--enable" class="btn btn-default btn-block btn-sm" onclick="fnCopy('{{ url('admin_product_product_copy', {'id' : id}) }}');return false;">
                                                         複製
                                                     </button>
                                                 </li>
-                                                <li>
-                                                     <a id="product_edit_aside_column__button_menu_delete--enable" class="btn btn-default btn-block btn-sm" href="{{ url('admin_product_product_delete', {'id' : Product.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete" data-message="この商品情報を削除してもよろしいですか？">
+                                                <li id="product_edit_aside_column__button_menu_delete--enable">
+                                                     <a id="button__menu_delete--enable" class="btn btn-default btn-block btn-sm" href="{{ url('admin_product_product_delete', {'id' : Product.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete" data-message="この商品情報を削除してもよろしいですか？">
                                                         削除
                                                     </a>
                                                 </li>

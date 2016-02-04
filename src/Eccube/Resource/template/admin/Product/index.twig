@@ -175,32 +175,32 @@ $(function() {
                             <div class="row">
                                 <div class="col-md-6">
                                     <ul id="product_search_result__state_menu" class="link-with-bar">
-                                    <li>
+                                    <li id="product_search_result__link_product_page">
                                         {% if page_status is null %}
-                                        <a>すべて</a>
+                                        <a id="link__product_page--disable">すべて</a>
                                         {% else %}
-                                        <a href="{{ path('admin_product_page', {'page_no': page_no} ) }}">すべて</a>
+                                        <a id="link__product_page--enable" href="{{ path('admin_product_page', {'page_no': page_no} ) }}">すべて</a>
                                         {% endif %}
                                     </li>
                                     {% for disp in disps %}
-                                      <li>
+                                      <li id="product_search_result__link_product_page--{{ disp.id }}_enable">
                                       {% if page_status == disp.id %}
-                                      <a>{{ disp.name|e }}</a>
+                                      <a id="link__product_page--{{ disp.id }}_diable">{{ disp.name|e }}</a>
                                       {% else %}
-                                      <a href="{{ path('admin_product_page', {'page_no': page_no, 'status': disp.id} ) }}">{{ disp.name|e }}</a>
+                                      <a id="link__product_page--{{ disp.id }}_enable" href="{{ path('admin_product_page', {'page_no': page_no, 'status': disp.id} ) }}">{{ disp.name|e }}</a>
                                       {% endif %}
                                       </li>
                                     {% endfor %}
-                                      <li>
+                                      <li id="product_search_result__link_product_page--{{ disp.id }}_enable">
                                       {% if page_status == app.config.admin_product_stock_status %}
-                                          <a>{{ app.translator.trans('admin.product.search.stock') }}</a>
+                                          <a id="link__product_page--disable">{{ app.translator.trans('admin.product.search.stock') }}</a>
                                       {% else %}
-                                          <a href="{{ path('admin_product_page', {'page_no': page_no, 'status': app.config.admin_product_stock_status} ) }}">{{ app.translator.trans('admin.product.search.stock') }}</a>
+                                          <a id="link__product_page--enable" href="{{ path('admin_product_page', {'page_no': page_no, 'status': app.config.admin_product_stock_status} ) }}">{{ app.translator.trans('admin.product.search.stock') }}</a>
                                       {% endif %}
                                       </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
+                                <div  class="col-md-6">
                                     <ul class="sort-dd">
                                     <li id="product_search_result__display_item_total_menu" class="dropdown">
                                         {% for pageMax in pageMaxis if pageMax.name == page_count %}
@@ -208,15 +208,15 @@ $(function() {
                                             <ul class="dropdown-menu">
                                         {% endfor %}
                                         {% for pageMax in pageMaxis if pageMax.name != page_count %}
-                                                <li><a href="{{ path('admin_product_page', {'page_no': 1, 'page_count': pageMax.name}) }}">{{ pageMax.name|e }}件</a></li>
+                                                <li id="product_search_result__link_result_product_page"><a id="link__result_product_page" href="{{ path('admin_product_page', {'page_no': 1, 'page_count': pageMax.name}) }}">{{ pageMax.name|e }}件</a></li>
                                         {% endfor %}
                                             </ul>
                                     </li>
                                     <li id="product_search_result__csv_menu" class="dropdown">
                                         <a class="dropdown-toggle" data-toggle="dropdown">CSVダウンロード<svg class="cb cb-angle-down icon_down"><use xlink:href="#cb-angle-down"></svg></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{{ url('admin_product_export') }}">CSVダウンロード</a></li>
-                                            <li><a href="{{ url('admin_setting_shop_csv', { id : constant('\\Eccube\\Entity\\Master\\CsvType::CSV_TYPE_PRODUCT') }) }}">出力項目設定</a></li>
+                                            <li id="product_search_result__link_product_export"><a id="link__product_export" href="{{ url('admin_product_export') }}">CSVダウンロード</a></li>
+                                            <li id="product_search_result__link_setting_shop_csv"><a id="link__setting_shop_csv" href="{{ url('admin_setting_shop_csv', { id : constant('\\Eccube\\Entity\\Master\\CsvType::CSV_TYPE_PRODUCT') }) }}">出力項目設定</a></li>
                                         </ul>
                                     </li>
                                     </ul>
@@ -226,34 +226,34 @@ $(function() {
                                 <div class="tableish tableish-striped">
 
                                     {% for Product in pagination %}
-                                        <div id="product_search_result__item_box--{{ loop.index }}" class="item_box tr">
-                                            <div id="product_search_result__item_id--{{ loop.index }}" class="item_id td">
+                                        <div id="product_search_result__item_box--{{ Product.id }}" class="item_box tr">
+                                            <div id="product_search_result__item_id--{{ Product.id }}" class="item_id td">
                                                 {{Product.id}}
                                             </div>
 
-                                            <div id="product_search_result__item_image--{{ loop.index }}" class="item_photo td">
+                                            <div id="product_search_result__item_image--{{ Product.id }}" class="item_photo td">
                                                 <a href="{{ url('admin_product_product_edit', { id : Product.id }) }}">
                                                 	<img src="{{ app.config.image_save_urlpath }}/{{ Product.mainFileName|no_image_product }}" />
                                                 </a>
                                             </div>
-                                            <div id="product_search_result__item_edit--{{ loop.index }}" class="item_detail td">
+                                            <div id="product_search_result__item_edit--{{ Product.id }}" class="item_detail td">
                                                 <a href="{{ url('admin_product_product_edit', { id : Product.id }) }}">
                                                     {{ Product.name }}
                                                 </a><br>
-                                                <span id="product_search_result__item_class--{{ loop.index }}">
+                                                <span id="product_search_result__item_class--{{ Product.id }}">
                                                     {{ Product.code_min }}
                                                     {% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}
                                                     {% endif %}
                                                 </span>
                                             </div>
                                             <div class="icon_edit td">
-                                                <div id="product_search_result__item_box_edit_menu--{{ loop.index }}" class="dropdown">
+                                                <div id="product_search_result__item_box_edit_menu--{{ Product.id }}" class="dropdown">
                                                     <a class="dropdown-toggle" data-toggle="dropdown"><svg class="cb cb-ellipsis-h"><use xlink:href="#cb-ellipsis-h"></svg></a>
                                                     <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li><a href="{{ url('admin_product_product_class', { id : Product.id }) }}">規格</a></li>
-                                                    <li><a href="{{ url('admin_product_product_display', {'id' : Product.id}) }}" target="_blank">確認</a></li>
-                                                    <li><a href="#" onclick="fnCopy('{{ url('admin_product_product_copy', {'id' : Product.id}) }}');return false;">複製</a></li>
-                                                    <li><a href="{{ url('admin_product_product_delete', {'id' : Product.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete" data-message="商品情報を削除してもよろしいですか？">削除</a></li>
+                                                    <li id="product_search_result__link_product_product_class--{{ Product.id }}"><a id="link__product_product_class--{{ Product.id }}" href="{{ url('admin_product_product_class', { id : Product.id }) }}">規格</a></li>
+                                                    <li id="product_search_result__link_product_product_display--{{ Product.id }}"><a id="link__product_product_display--{{ Product.id }}" href="{{ url('admin_product_product_display', {'id' : Product.id}) }}" target="_blank">確認</a></li>
+                                                    <li id="product_search_result__link_product_product_copy--{{ Product.id }}"><a id="link__product_product_copy--{{ Product.id }}" href="#" onclick="fnCopy('{{ url('admin_product_product_copy', {'id' : Product.id}) }}');return false;">複製</a></li>
+                                                    <li id="product_search_result__link_product_product_delete--{{ Product.id }}"><a id="link__product_product_delete--{{ Product.id }}" href="{{ url('admin_product_product_delete', {'id' : Product.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete" data-message="商品情報を削除してもよろしいですか？">削除</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
