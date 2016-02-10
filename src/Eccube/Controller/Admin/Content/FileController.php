@@ -26,6 +26,8 @@ namespace Eccube\Controller\Admin\Content;
 
 use Eccube\Application;
 use Eccube\Controller\AbstractController;
+use Eccube\Event\EccubeEvents;
+use Eccube\Event\EventArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -52,6 +54,14 @@ class FileController extends AbstractController
             ->add('file', 'file')
             ->add('create_file', 'text')
             ->getForm();
+
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_FILE_INDEX_INITIALIZE, $event);
 
         // user_data_dir
         $topDir = $this->normalizePath($app['config']['user_data_realdir']);
@@ -118,6 +128,14 @@ class FileController extends AbstractController
             ->add('file', 'file')
             ->add('create_file', 'text')
             ->getForm();
+
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_FILE_CREATE_INITIALIZE, $event);
 
         $form->handleRequest($request);
 
@@ -198,6 +216,14 @@ class FileController extends AbstractController
             ->add('file', 'file')
             ->add('create_file', 'text')
             ->getForm();
+
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_FILE_UPLOAD_INITIALIZE, $event);
 
         $form->handleRequest($request);
 

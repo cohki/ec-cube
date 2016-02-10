@@ -69,6 +69,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         <label class="col-sm-4 col-lg-3 control-label">ファイルのアップロード</label>
                         <div class="col-sm-8 col-lg-9 padT07">
                             {{ form_widget(form.file) }}
+                            <div class="extra-form">
+                            {% for f in form.getIterator %}
+                                    {% if f.vars.name matches '[^plg*]' %}
+                                        {{ form_label(f) }}
+                                        {{ form_widget(f) }}
+                                        {{ form_errors(f) }}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                             <div class="marT10"><a class="btn btn-default btn-sm" href="javascript;" onclick="eccube.fileManager.setTreeStatus('tree_status');eccube.setModeAndSubmit('upload','',''); return false;">アップロード</a></div>
                         </div>
                     </div>
@@ -77,6 +86,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         <div class="col-sm-8 col-lg-9">
                             {{ form_widget(form.create_file) }}
                             <a class="btn btn-default btn-sm" href="javascript:" onclick="eccube.fileManager.setTreeStatus('tree_status');eccube.setModeAndSubmit('create','',''); return false;">作成</a>
+                            <div class="extra-form">
+                            {% for f in form.getIterator %}
+                                    {% if f.vars.name matches '[^plg*]' %}
+                                        {{ form_label(f) }}
+                                        {{ form_widget(f) }}
+                                        {{ form_errors(f) }}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 {% if error is not null %}
@@ -145,6 +163,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         <td class="text-center">
                             <a href="{{ url('admin_content_file_delete', { 'select_file': file.file_path}) }}" {{ csrf_token_for_anchor() }} data-method="delete" data-message="一度削除したデータは元に戻せません。削除してもよろしいですか？">削除</a>
                         </td>
+                        <div class="extra-form">
+                        {% for f in form.getIterator %}
+                                {% if f.vars.name matches '[^plg*]' %}
+                                    {{ form_label(f) }}
+                                    {{ form_widget(f) }}
+                                    {{ form_errors(f) }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </tr>
                 {% endfor %}
                                 </tbody>
