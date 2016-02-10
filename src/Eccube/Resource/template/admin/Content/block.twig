@@ -51,6 +51,15 @@
                                             <div class="dropdown">
                                                 <a class="dropdown-toggle" data-toggle="dropdown"><svg class="cb cb-ellipsis-h"> <use xlink:href="#cb-ellipsis-h" /></svg></a>
                                                 <ul class="dropdown-menu dropdown-menu-right">
+                                                    <div class="extra-form">
+                                                    {% for f in form.getIterator %}
+                                                            {% if f.vars.name matches '[^plg*]' %}
+                                                                {{ form_label(f) }}
+                                                                {{ form_widget(f) }}
+                                                                {{ form_errors(f) }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
                                                     <li>
                                                         <a href="{{ url('admin_content_block_edit', {id: Block.id}) }}">編集</a>
                                                     </li>
@@ -66,6 +75,15 @@
                                         </div>
                                     </div><!-- /.item_box -->
                                 {% endfor %}
+                                <div class="extra-form">
+                                {% for f in form.getIterator %}
+                                        {% if f.vars.name matches '[^plg*]' %}
+                                            {{ form_label(f) }}
+                                            {{ form_widget(f) }}
+                                            {{ form_errors(f) }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div><!-- /.box-body -->

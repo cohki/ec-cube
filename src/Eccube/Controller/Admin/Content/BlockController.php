@@ -27,13 +27,16 @@ namespace Eccube\Controller\Admin\Content;
 use Eccube\Application;
 use Eccube\Controller\AbstractController;
 use Eccube\Entity\Master\DeviceType;
+use Eccube\Event\EccubeEvents;
+use Eccube\Event\EventArgs;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
 
 class BlockController extends AbstractController
 {
-    public function index(Application $app)
+    public function index(Application $app, Request $request)
     {
         $DeviceType = $app['eccube.repository.master.device_type']
             ->find(DeviceType::DEVICE_TYPE_PC);
@@ -41,12 +44,20 @@ class BlockController extends AbstractController
         // 登録されているブロック一覧の取得
         $Blocks = $app['eccube.repository.block']->getList($DeviceType);
 
+        $event = new EventArgs(
+            array(
+                'blocks' => $Blocks,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_BLOCK_INDEX_COMPLETE, $event);
+
         return $app->render('Content/block.twig', array(
             'Blocks' => $Blocks,
         ));
     }
 
-    public function edit(Application $app, $id = null)
+    public function edit(Application $app, $id = null, Request $request)
     {
         $DeviceType = $app['eccube.repository.master.device_type']
             ->find(DeviceType::DEVICE_TYPE_PC);
@@ -61,6 +72,15 @@ class BlockController extends AbstractController
         $form = $app['form.factory']
             ->createBuilder('block', $Block)
             ->getForm();
+
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+                'block' => $Block,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_BLOCK_EDIT_INITIALIZE, $event);
 
         $html = '';
         $previous_filename = null;
@@ -102,6 +122,15 @@ class BlockController extends AbstractController
 
                 \Eccube\Util\Cache::clear($app,false);
 
+                $event = new EventArgs(
+                    array(
+                        'form' => $form,
+                        'block' => $Block,
+                    ),
+                    $request
+                );
+                $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_BLOCK_EDIT_COMPLETE, $event);
+
                 $app->addSuccess('admin.register.complete', 'admin');
 
                 return $app->redirect($app->url('admin_content_block_edit', array('id' => $Block->getId())));
@@ -116,7 +145,7 @@ class BlockController extends AbstractController
         ));
     }
 
-    public function delete(Application $app, $id)
+    public function delete(Application $app, $id, Request $request)
     {
         $this->isTokenValid($app);
 
@@ -144,6 +173,14 @@ class BlockController extends AbstractController
             }
             $app['orm.em']->remove($Block);
             $app['orm.em']->flush();
+
+            $event = new EventArgs(
+                array(
+                    'block' => $Block,
+                ),
+                $request
+            );
+            $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_BLOCK_DELETE_COMPLETE, $event);
 
             $app->addSuccess('admin.delete.complete', 'admin');
             \Eccube\Util\Cache::clear($app,false);
