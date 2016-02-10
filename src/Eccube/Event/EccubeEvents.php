@@ -45,49 +45,78 @@ final class EccubeEvents
      */
     // index
     const ADMIN_BLOCK_INDEX_INITIALIZE = 'admin.block.index.initialize';
+    const ADMIN_BLOCK_INDEX_COMPLETE = 'admin.block.index.complete';
 
     // edit
+    const ADMIN_BLOCK_EDIT_INITIALIZE = 'admin.block.edit.initialize';
+    const ADMIN_BLOCK_EDIT_COMPLETE = 'admin.block.edit.complete';
 
     // delete
+    const ADMIN_BLOCK_DELETE_INITIALIZE = 'admin.block.delete.initialize';
+    const ADMIN_BLOCK_DELETE_COMPLETE = 'admin.block.delete.complete';
 
     /**
      * Admin/Content/FileController
      */
     // index
+    const ADMIN_FILE_INDEX_INITIALIZE = 'admin.file.index.initialize';
+    const ADMIN_FILE_INDEX_COMPLETE = 'admin.file.index.complete';
 
     // create
+    const ADMIN_FILE_CREATE_INITIALIZE = 'admin.file.create.initialize';
+    const ADMIN_FILE_CREATE_COMPLETE = 'admin.file.create.complete';
 
     // delete
+    const ADMIN_FILE_DELETE_INITIALIZE = 'admin.file.delete.initialize';
+    const ADMIN_FILE_DELETE_COMPLETE = 'admin.file.delete.complete';
 
     // download
+    const ADMIN_FILE_DOWNLOAD_INITIALIZE = 'admin.file.download.initialize';
+    const ADMIN_FILE_DOWNLOAD_COMPLETE = 'admin.file.download.complete';
 
     // upload
+    const ADMIN_FILE_UPLOAD_INITIALIZE = 'admin.file.upload.initialize';
+    const ADMIN_FILE_UPLOAD_COMPLETE = 'admin.file.upload.complete';
 
 
     /**
      * Admin/Content/LayoutController
      */
     // index
+    const ADMIN_LAYOUT_INDEX_INITIALIZE = 'admin.layout.index.initialize';
+    const ADMIN_LAYOUT_INDEX_COMPLETE = 'admin.layout.index.complete';
 
 
     /**
      * Admin/Content/NewsController
      */
     // index
+    const ADMIN_NEWS_INDEX_INITIALIZE = 'admin.news.index.initialize';
+    const ADMIN_NEWS_INDEX_COMPLETE = 'admin.news.index.complete';
 
     // edit
+    const ADMIN_NEWS_EDIT_INITIALIZE = 'admin.news.edit.initialize';
+    const ADMIN_NEWS_EDIT_COMPLETE = 'admin.news.edit.complete';
 
     // delete
+    const ADMIN_NEWS_DELETE_INITIALIZE = 'admin.news.delete.initialize';
+    const ADMIN_NEWS_DELETE_COMPLETE = 'admin.news.delete.complete';
 
 
     /**
      * Admin/Content/PageController
      */
     // index
+    const ADMIN_PAGE_INDEX_INITIALIZE = 'admin.page.index.initialize';
+    const ADMIN_PAGE_INDEX_COMPLETE = 'admin.page.index.complete';
 
     // edit
+    const ADMIN_PAGE_EDIT_INITIALIZE = 'admin.page.edit.initialize';
+    const ADMIN_PAGE_EDIT_COMPLETE = 'admin.page.edit.complete';
 
     // delete
+    const ADMIN_PAGE_DELETE_INITIALIZE = 'admin.page.delete.initialize';
+    const ADMIN_PAGE_DELETE_COMPLETE = 'admin.page.delete.complete';
 
     /**
      * Admin/Customer/CustomerController
