@@ -32,12 +32,22 @@ final class EccubeEvents
      * Admin/AdminContoller
      */
     // login
-    const ADMIN_ADMIM_LOGIN_INITIALIZE = 'admin.admin.login.initialize';
-    const ADMIN_ADMIM_LOGIN_COMPLETE = 'admin.admin.login.complete';
+    const ADMIN_ADMIN_LOGIN_INITIALIZE = 'admin.admin.login.initialize';
+    const ADMIN_ADMIN_LOGIN_COMPLETE = 'admin.admin.login.complete';
 
     // index
+    const ADMIN_ADMIN_INDEX_SEARCH_ORDER_INITIALIZE = 'admin.admin.index.search.order.initialize';
+    const ADMIN_ADMIN_INDEX_SEARCH_PRODUCT_INITIALIZE = 'admin.admin.index.search.product.initialize';
+    const ADMIN_ADMIN_INDEX_SEARCH_CUSTOMER_INITIALIZE = 'admin.admin.index.search.customer.initialize';
+    const ADMIN_ADMIN_INDEX_SEARCH_ORDER_SEARCH = 'admin.admin.index.search.order.search';
+    const ADMIN_ADMIN_INDEX_SEARCH_ORDER_COMPLETE = 'admin.admin.index.search.order.complete';
+    const ADMIN_ADMIN_INDEX_SEARCH_PRODUCT_COMPLETE = 'admin.admin.index.search.product.complete';
+    const ADMIN_ADMIN_INDEX_SEARCH_CUSTOMER_COMPLETE = 'admin.admin.index.search.customer.complete';
 
     // searchNonStockProducts
+    const ADMIN_ADMIN_SEARCH_NON_STOCK_PRODUCTS_INITIALIZE = 'admin.admin.search.non.stock.products.initialize';
+    const ADMIN_ADMIN_SEARCH_NON_STOCK_PRODUCTS_SEARCH = 'admin.admin.search.non.stock.products.search';
+    const ADMIN_ADMIN_SEARCH_NON_STOCK_PRODUCTS_COMPLETE = 'admin.admin.search.non.stock.products.complete';
 
 
     /**

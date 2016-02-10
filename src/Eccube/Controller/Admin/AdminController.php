@@ -29,6 +29,8 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Eccube\Application;
 use Eccube\Common\Constant;
 use Eccube\Controller\AbstractController;
+use Eccube\Event\EccubeEvents;
+use Eccube\Event\EventArgs;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends AbstractController
@@ -43,6 +45,24 @@ class AdminController extends AbstractController
         $form = $app['form.factory']
             ->createNamedBuilder('', 'admin_login')
             ->getForm();
+
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_LOGIN_INITIALIZE, $event);
+
+        // INITIALIZEと内容は変わりませんが、拡張性を考慮して一応COMPLETEを実装しておきました。
+        // 不要であれば削除して下さい。また、こちらのコメントはマージ時に削除お願いいたします。
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_LOGIN_COMPLETE, $event);
 
         return $app->render('login.twig', array(
             'error' => $app['security.last_error']($request),
@@ -73,6 +93,32 @@ class AdminController extends AbstractController
             ->createBuilder('admin_search_customer')
             ->getForm();
 
+        // 受注マスター検索用イベント
+        $event = new EventArgs(
+            array(
+                'form' => $searchOrderForm,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_INDEX_SEARCH_ORDER_INITIALIZE, $event);
+
+        // 商品マスター検索用イベント
+        $event = new EventArgs(
+            array(
+                'form' => $searchProductForm,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_INDEX_SEARCH_PRODUCT_INITIALIZE, $event);
+
+        // 会員マスター検索用イベント
+        $event = new EventArgs(
+            array(
+                'form' => $searchCustomerForm,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_INDEX_SEARCH_CUSTOMER_INITIALIZE, $event);
         /**
          * 受注状況.
          */
@@ -81,6 +127,15 @@ class AdminController extends AbstractController
         $excludes[] = $app['config']['order_processing'];
         $excludes[] = $app['config']['order_cancel'];
         $excludes[] = $app['config']['order_deliv'];
+
+        $event = new EventArgs(
+            array(
+                'form' => $searchOrderForm,
+                'excludes' => $excludes,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_INDEX_SEARCH_ORDER_SEARCH, $event);
 
         // 受注ステータスごとの受注件数.
         $Orders = $this->getOrderEachStatus($app['orm.em'], $excludes);
@@ -110,6 +165,34 @@ class AdminController extends AbstractController
         // 本会員数
         $countCustomers = $this->countCustomers($app['orm.em']);
 
+        $event = new EventArgs(
+            array(
+                'form' => $searchOrderForm,
+                'orders' => $Orders,
+                'orderStatuses' => $OrderStatuses,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_INDEX_SEARCH_ORDER_COMPLETE, $event);
+
+        $event = new EventArgs(
+            array(
+                'form' => $searchProductForm,
+                'countNonStockProducts' => $countNonStockProducts,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_INDEX_SEARCH_PRODUCT_COMPLETE, $event);
+
+        $event = new EventArgs(
+            array(
+                'form' => $searchCustomerForm,
+                'countCustomers' => $countCustomers,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_INDEX_SEARCH_CUSTOMER_COMPLETE, $event);
+
         return $app->render('index.twig', array(
             'searchOrderForm' => $searchOrderForm->createView(),
             'searchProductForm' => $searchProductForm->createView(),
@@ -137,6 +220,14 @@ class AdminController extends AbstractController
         $form = $app['form.factory']
             ->createBuilder('admin_search_product')
             ->getForm();
+
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_SEARCH_NON_STOCK_PRODUCTS_INITIALIZE, $event);
         
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
@@ -145,6 +236,16 @@ class AdminController extends AbstractController
                 // 在庫なし商品の検索条件をセッションに付与し, 商品マスタへリダイレクトする.
                 $searchData = array();
                 $searchData['stock_status'] = Constant::DISABLED;    
+
+                $event = new EventArgs(
+                    array(
+                        'form' => $form,
+                        'searchData' => $searchData,
+                    ),
+                    $request
+                );
+                $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_SEARCH_NON_STOCK_PRODUCTS_SEARCH, $event);
+
                 $session = $request->getSession();
                 $session->set('eccube.admin.product.search', $searchData);
 
@@ -154,6 +255,13 @@ class AdminController extends AbstractController
             }
         }
         
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_SEARCH_NON_STOCK_PRODUCTS_COMPLETE, $event);
         return $app->redirect($app->url('admin_homepage'));
     }
     
