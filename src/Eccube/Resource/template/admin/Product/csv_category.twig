@@ -64,45 +64,45 @@ $(function() {
 {% endblock javascript %}
 
 {% block main %}
-<div id="category_csv_upload" class="row">
-    <div class="col-md-12">
+<div id="box" class="row">
+    <div id="box_main" class="col-md-12">
         <form id="upload-form" class="form-inline" method="post" action="{{ url('admin_product_category_csv_import') }}" {{ form_enctype(form) }}>
             {{ form_widget(form._token) }}
-            <div id="category_csv_upload__box" class="box">
-                <div id="category_csv_header" class="box-header">
+            <div id="upload_box" class="box">
+                <div id="upload_box__header" class="box-header">
                     <h3 class="box-title">カテゴリ登録CSV</h3>
                 </div><!-- /.box-header -->
-                <div id="category_csv_body" class="box-body">
-                    <div class="form-group">
-                        <label id="category_csv_body__label" class="col-sm-5 control-label">CSVファイル選択</label>
-                        <div id="category_csv_body__file" class="col-sm-7">
+                <div id="upload_box__body" class="box-body">
+                    <div id="upload_box__form" class="form-group">
+                        <label class="col-sm-5 control-label">CSVファイル選択</label>
+                        <div id="upload_box__file" class="col-sm-7">
                             {{ form_widget(form.import_file, {'attr': {'accept': 'text/csv,text/tsv'}}) }}
                             {{ form_errors(form.import_file) }}
                         </div>
                         {% for error in errors %}
-                            <div id="category_csv_body__error" class="text-danger">{{ error.message }}</div>
+                            <div id="upload_box__error" class="text-danger">{{ error.message }}</div>
                         {% endfor %}
                     </div>
                     <div id="spinner"></div>
                 </div><!-- /.box-body -->
-                <div id="category_csv_upload__button_area" class="box-footer text-center">
-                    <button id="upload-button" type="submit" class="btn btn-primary btn-sm">CSVファイルのアップロード</button>
+                <div id="button_box__upload_button" class="box-footer text-center">
+                    <button type="submit" class="btn btn-primary btn-sm">CSVファイルのアップロード</button>
                 </div><!-- /.box-footer -->
             </div><!-- /.box -->
         </form>
     </div><!-- /.col -->
 </div>
 
-<div id="category_csv_file_format" class="row">
-    <div class="col-md-12">
-        <div class="box">
-            <div id="category_csv_file_format__head" class="box-header">
+<div id="sub_box" class="row">
+    <div id="sub_box_main" class="col-md-12">
+        <div id="format_box" class="box">
+            <div id="format_box__header" class="box-header">
                 <a href="{{ url('admin_product_csv_template', {'type': 'category'}) }}" id="download-button" class="btn btn-default pull-right btn-xs">雛形ファイルダウンロード</a>
                 <h3 class="box-title">カテゴリ登録CSVファイルフォーマット</h3>
             </div><!-- /.box-header -->
-            <div id="category_csv_file_format__body" class="box-body no-padding">
-                <div class="table_list">
-                    <div class="table-responsive no-border table-menu table-responsive-overflow">
+            <div id="format_box__body" class="box-body no-padding">
+                <div id="format_box__list" class="table_list">
+                    <div id="format_box__menu" class="table-responsive no-border table-menu table-responsive-overflow">
                         <table class="table table-striped">
                             <thead>
                                 <tr id="file_format__head" class="text-nowrap">
