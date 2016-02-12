@@ -42,7 +42,7 @@ class NewsController extends AbstractController
      * @param Application $app
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(Application $app)
+    public function index(Application $app, Request $request)
     {
         $NewsList = $app['eccube.repository.news']->findBy(array(), array('rank' => 'DESC'));
 
