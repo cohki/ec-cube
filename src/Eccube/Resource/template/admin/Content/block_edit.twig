@@ -37,15 +37,15 @@
     {{ form_widget(form.id) }}
     {{ form_widget(form.DeviceType, { attr : { style : 'display: none;' } } ) }}
     <div class="row" id="aside_wrap">
-        <div class="col-md-9">
-            <div class="box form-horizontal">
-                <div class="box-header">
+        <div id="block_edit" class="col-md-9">
+            <div id="block_edit_box"class="box form-horizontal">
+                <div id="block_edit_box__header" class="box-header">
                     <h3 class="box-title">ブロック編集</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
+                <div id="block_edit_box__body" class="box-body">
 
-                    <div class="form-group">
+                    <div id="block_edit_box__block_name" class="form-group">
                         {{ form_label(form.name) }}
                         <div class="col-sm-9 col-lg-10">
                             {{ form_widget(form.name) }}
@@ -53,7 +53,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div id="block_edit_box__block_file_name" class="form-group">
                         {{ form_label(form.file_name) }}
                         <div class="col-sm-9 col-lg-10 padT07">
                             {% if deletable %}
@@ -66,7 +66,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div id="block_edit_box__block_block_html" class="form-group">
                         {{ form_label(form.block_html) }}
                         <div class="col-sm-9 col-lg-10">
                             {{ form_widget(form.block_html, { attr : { 'rows' : 15, style : 'font-size:12px' } }) }}
@@ -76,8 +76,8 @@
                 </div>
             </div>
 
-            <div class="row hidden-xs hidden-sm">
-                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 text-center btn_area">
+            <div id="block_edit_footer" class="row hidden-xs hidden-sm">
+                <div id="block_edit_footer__button_area" class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 text-center btn_area">
                     <p><a href="{{ url('admin_content_block') }}">戻る</a></p>
                 </div>
             </div>
@@ -86,11 +86,11 @@
         <!-- /.col -->
         <div class="col-md-3">
             <div class="col_inner" id="aside_column">
-                <div class="box no-header">
-                    <div class="box-body">
-                        <div class="row text-center">
+                <div id="button_box" class="box no-header">
+                    <div id="button_box__body" class="box-body">
+                        <div id="button_box__button_area" class="row text-center">
                             <div class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
-                                <button class="btn btn-primary btn-block btn-lg"
+                                <button id="button_box__insert_button" class="btn btn-primary btn-block btn-lg"
                                         onclick="document.content_block_form.submit();">登録
                                 </button>
                             </div>
