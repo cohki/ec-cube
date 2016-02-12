@@ -78,11 +78,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% endblock %}
 
 {% block main %}
-    <div id="class_name" class="row">
-        <div class="col-md-12">
-            <div id="class_name_content" class="box">
-                <div id="class_name_content__head" class="box-header">
-                    <div class="form-inline">
+    <div id="box" class="row">
+        <div id="box_main" class="col-md-12">
+            <div id="box_main__content" class="box">
+                <div id="content_box__header" class="box-header">
+                    <div id="content_box__form" class="form-inline">
                         <form role="form" class="form-horizontal" name="form1" id="form1" method="post" action="{% if TargetClassName.id %}{{ path('admin_product_class_name_edit', {id: TargetClassName.id}) }}{% else %}{{ url('admin_product_class_name') }}{% endif %}">
                             {{ form_widget(form._token) }}
                             {{ form_widget(form.name, {attr: {placeholder: '規格名を入力'}}) }}
@@ -92,23 +92,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     </div>
                 </div><!-- /.box-header -->
                 {% if ClassNames|length > 0 %}
-                    <div id="class_name_list" class="box-body no-padding no-border">
-                        <div class="sortable_list">
-                            <div class="tableish">
+                    <div id="content_box__list" class="box-body no-padding no-border">
+                        <div id="list_box" class="sortable_list">
+                            <div id="list_box__tableish" class="tableish">
 
                                 {% for ClassName in ClassNames %}
 
-                                    <div id="class_name_list__body__{{ ClassName.id }}" class="item_box tr" data-class-name-id="{{ ClassName.id }}" data-rank="{{ ClassName.rank }}">
-                                        <div class="icon_sortable td">
+                                    <div id="list_box__body__{{ ClassName.id }}" class="item_box tr" data-class-name-id="{{ ClassName.id }}" data-rank="{{ ClassName.rank }}">
+                                        <div id="list_box__icon__{{ ClassName.id }}" class="icon_sortable td">
                                             <svg class="cb cb-ellipsis-v"> <use xlink:href="#cb-ellipsis-v" /></svg>
                                         </div>
-                                        <div id="class_name_list__title__{{ ClassName.id }}" class="item_pattern td">
+                                        <div id="list_box__title__{{ ClassName.id }}" class="item_pattern td">
                                             <a href="{{ url('admin_product_class_category', {class_name_id : ClassName.id }) }}">
                                                 {{ ClassName.name }} ({{ ClassName.ClassCategories|length }})
                                             </a>
                                         </div>
-                                        <div id="class_name_list__edit__{{ ClassName.id }}" class="icon_edit td">
-                                            <div class="dropdown">
+                                        <div id="list_box__edit__{{ ClassName.id }}" class="icon_edit td">
+                                            <div id="list_box_edit__menu__{{ ClassName.id }}" class="dropdown">
                                                 <a class="dropdown-toggle" data-toggle="dropdown"><svg class="cb cb-ellipsis-h"> <use xlink:href="#cb-ellipsis-h" /></svg></a>
                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                     <li>
@@ -141,8 +141,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         </div>
                     </div><!-- /.box-body -->
                 {% else %}
-                    <div id="class_name_list" class="box-body no-padding">
-                        <div class="data-empty"><svg class="cb cb-inbox"> <use xlink:href="#cb-inbox" /></svg><p>データはありません</p></div>
+                    <div id="content_box__list" class="box-body no-padding">
+                        <div id="content_box__empty" class="data-empty"><svg class="cb cb-inbox"> <use xlink:href="#cb-inbox" /></svg><p>データはありません</p></div>
                     </div><!-- /.box-body -->
                 {% endif %}
                 <!-- ▲ データがある時 ▲ -->
