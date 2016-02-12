@@ -113,7 +113,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 {% endif %}
                 {% for file in arrFileList %}
                     <tr id="{{ loop.index }}" style="">
-                        <td id="result_list_main__file_name" class="file-name" onDblClick="eccube.fileManager.setTreeStatus('tree_status');eccube.fileManager.doubleClick(arrTree, '{{ file.file_path }}', {% if file.is_dir %}true{% else %}false{% endif %} '{{ tpl_now_dir }}', false)">
+                        <td id="result_list_main__file_name--{{ loop.index }}" class="file-name" onDblClick="eccube.fileManager.setTreeStatus('tree_status');eccube.fileManager.doubleClick(arrTree, '{{ file.file_path }}', {% if file.is_dir %}true{% else %}false{% endif %} '{{ tpl_now_dir }}', false)">
                             {% if file.is_dir %}
                                 <svg class="cb cb-folder"><use xlink:href="#cb-folder" /></svg>
                             {% else %}
@@ -121,13 +121,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                             {% endif %}
                             {{ file.file_name }}
                         </td>
-                        <td id="result_list_main__file_size" class="text-right">
+                        <td id="result_list_main__file_size--{{ loop.index }}" class="text-right">
                             {{ file.file_size }}
                         </td>
-                        <td id="result_list_main__file_time" class="text-center">
+                        <td id="result_list_main__file_time--{{ loop.index }}" class="text-center">
                             {{ file.file_time }}
                         </td>
-                        <td id="result_list_main__is_dir" class="text-center">
+                        <td id="result_list_main__is_dir--{{ loop.index }}" class="text-center">
                             {% if file.is_dir %}
                                 <a href="javascript:;" onclick="eccube.setValue('tree_select_file', '{{ file.file_path }}', 'form1'); eccube.fileManager.selectFile('{{ loop.index }}', '#808080');eccube.setModeAndSubmit('move','',''); return false;">表示</a>
                             {% else %}
@@ -136,13 +136,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         </td>
                         {% if file.is_dir %}
                             {# ディレクトリはダウンロード不可 #}
-                            <td id="result_list_main__file_download" class="text-center">-</td>
+                            <td id="result_list_main__file_download--{{ loop.index }}" class="text-center">-</td>
                         {% else %}
-                            <td id="result_list_main__file_download"class="text-center">
+                            <td id="result_list_main__file_download--{{ loop.index }}"class="text-center">
                                 <a href="{{ url('admin_content_file_download') }}?select_file={{ file.file_path|e('url') }}" target="_blank">ダウンロード</a>
                             </td>
                         {% endif %}
-                        <td id="result_list_main__file_delete" class="text-center">
+                        <td id="result_list_main__file_delete--{{ loop.index }}" class="text-center">
                             <a href="{{ url('admin_content_file_delete', { 'select_file': file.file_path}) }}" {{ csrf_token_for_anchor() }} data-method="delete" data-message="一度削除したデータは元に戻せません。削除してもよろしいですか？">削除</a>
                         </td>
                     </tr>
