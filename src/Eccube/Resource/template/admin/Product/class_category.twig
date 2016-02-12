@@ -100,16 +100,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
                                 {% for ClassCategory in ClassCategories %}
 
-                                    <div id="list_box_list__body__{{ ClassCategory.id }}" class="item_box tr" data-category-id="{{ ClassCategory.id }}" data-rank="{{ ClassCategory.rank }}">
+                                    <div id="list_box__body__{{ ClassCategory.id }}" class="item_box tr" data-category-id="{{ ClassCategory.id }}" data-rank="{{ ClassCategory.rank }}">
                                         <div class="icon_sortable td">
                                             <svg class="cb cb-ellipsis-v"> <use xlink:href="#cb-ellipsis-v" /></svg>
                                         </div>
-                                        <div id="list_box_list__title__{{ ClassCategory.id }}" class="item_pattern td">
+                                        <div id="list_box__title__{{ ClassCategory.id }}" class="item_pattern td">
                                             <a href="{{ url('admin_product_class_category_edit', {class_name_id: ClassName.id, id: ClassCategory.id}) }}">
                                                 {{ ClassCategory.name }}
                                             </a>
                                         </div>
-                                        <div id="list_box_list__edit__{{ ClassCategory.id }}" class="icon_edit td">
+                                        <div id="list_box__edit__{{ ClassCategory.id }}" class="icon_edit td">
                                             <div id="list_box_edit__menu__{{ ClassCategory.id }}" class="dropdown">
                                                 <a class="dropdown-toggle" data-toggle="dropdown"><svg class="cb cb-ellipsis-h"> <use xlink:href="#cb-ellipsis-h" /></svg></a>
                                                 <ul class="dropdown-menu dropdown-menu-right">
