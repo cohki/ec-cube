@@ -103,6 +103,7 @@ final class EccubeEvents
     // delete
     const ADMIN_NEWS_DELETE_INITIALIZE = 'admin.news.delete.initialize';
     const ADMIN_NEWS_DELETE_COMPLETE = 'admin.news.delete.complete';
+    const ADMIN_NEWS_DELETE_ERROR = 'admin.news.delete.error';
 
 
     /**
