@@ -84,7 +84,9 @@ final class EccubeEvents
      */
     // index
     const ADMIN_LAYOUT_INDEX_INITIALIZE = 'admin.layout.index.initialize';
+    const ADMIN_LAYOUT_INDEX_LIST_INITIALIZE = 'admin.layout.index.list.initialize';
     const ADMIN_LAYOUT_INDEX_COMPLETE = 'admin.layout.index.complete';
+    const ADMIN_LAYOUT_INDEX_LIST_COMPLETE = 'admin.layout.index.list.complete';
 
 
     /**
