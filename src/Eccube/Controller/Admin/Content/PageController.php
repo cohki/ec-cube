@@ -28,24 +28,35 @@ use Eccube\Application;
 use Eccube\Controller\AbstractController;
 use Eccube\Entity\Master\DeviceType;
 use Eccube\Entity\PageLayout;
+use Eccube\Event\EccubeEvents;
+use Eccube\Event\EventArgs;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends AbstractController
 {
-    public function index(Application $app)
+    public function index(Application $app, Request $request)
     {
         $DeviceType = $app['eccube.repository.master.device_type']
             ->find(DeviceType::DEVICE_TYPE_PC);
 
         $PageLayouts = $app['eccube.repository.page_layout']->getPageList($DeviceType);
 
+        $event = new EventArgs(
+            array(
+                'pageLayouts' => $PageLayouts,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_PAGE_INDEX_INITIALIZE, $event);
+
         return $app->render('Content/page.twig', array(
             'PageLayouts' => $PageLayouts,
         ));
     }
 
-    public function edit(Application $app, $id = null)
+    public function edit(Application $app, $id = null, Request $request)
     {
         $DeviceType = $app['eccube.repository.master.device_type']
             ->find(DeviceType::DEVICE_TYPE_PC);
@@ -57,6 +68,15 @@ class PageController extends AbstractController
         $form = $app['form.factory']
             ->createBuilder('main_edit', $PageLayout)
             ->getForm();
+
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+                'pageLayout' => $PageLayout,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_PAGE_EDIT_INITIALIZE, $event);
 
         // 更新時
         if ($id) {
@@ -94,6 +114,15 @@ class PageController extends AbstractController
                 $fs = new Filesystem();
                 $fs->dumpFile($filePath, $form->get('tpl_data')->getData());
 
+                $event = new EventArgs(
+                    array(
+                        'form' => $form,
+                        'pageLayout' => $PageLayout,
+                    ),
+                    $request
+                );
+                $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_PAGE_EDIT_COMPLETE, $event);
+
                 $app->addSuccess('admin.register.complete', 'admin');
 
                 // twig キャッシュの削除.
@@ -114,7 +143,7 @@ class PageController extends AbstractController
         ));
     }
 
-    public function delete(Application $app, $id = null)
+    public function delete(Application $app, $id = null, Request $request)
     {
         $this->isTokenValid($app);
 
@@ -126,6 +155,14 @@ class PageController extends AbstractController
                 'id' => $id,
                 'DeviceType' => $DeviceType
             ));
+
+        $event = new EventArgs(
+            array(
+                'pageLayout' => $PageLayout,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_PAGE_DELETE_INITIALIZE, $event);
 
         if (!$PageLayout) {
             $app->deleteMessage();
@@ -143,6 +180,14 @@ class PageController extends AbstractController
             }
             $app['orm.em']->remove($PageLayout);
             $app['orm.em']->flush();
+
+            $event = new EventArgs(
+                array(
+                    'pageLayout' => $PageLayout,
+                ),
+                $request
+            );
+            $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_PAGE_DELETE_COMPLETE, $event);
 
             $app->addSuccess('admin.delete.complete', 'admin');
         }

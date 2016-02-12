@@ -89,6 +89,16 @@
                                 {{ form_errors(form.tpl_data) }}
                             </div>
                         </div>
+
+                        <div class="extra-form">
+                        {% for f in form.getIterator %}
+                                {% if f.vars.name matches '[^plg*]' %}
+                                    {{ form_label(f) }}
+                                    {{ form_widget(f) }}
+                                    {{ form_errors(f) }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
                 <div class="box form-horizontal">
@@ -104,6 +114,16 @@
                         {{ form_row(form.description) }}
                         {{ form_row(form.keyword) }}
                         {{ form_row(form.meta_robots) }}
+
+                        <div class="extra-form">
+                        {% for f in form.getIterator %}
+                                {% if f.vars.name matches '[^plg*]' %}
+                                    {{ form_label(f) }}
+                                    {{ form_widget(f) }}
+                                    {{ form_errors(f) }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
