@@ -54,8 +54,6 @@ class AdminController extends AbstractController
         );
         $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_ADMIN_LOGIN_INITIALIZE, $event);
 
-        // INITIALIZEと内容は変わりませんが、拡張性を考慮して一応COMPLETEを実装しておきました。
-        // 不要であれば削除して下さい。また、こちらのコメントはマージ時に削除お願いいたします。
         $event = new EventArgs(
             array(
                 'form' => $form,

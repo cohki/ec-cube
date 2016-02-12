@@ -68,6 +68,15 @@ $(function(){
                                 {% endfor %}
                             </div>
                         </div>
+                        <div class="extra-form">
+                        {% for f in searchOrderForm.getIterator %}
+                                {% if f.vars.name matches '[^plg*]' %}
+                                    {{ form_label(f) }}
+                                    {{ form_widget(f) }}
+                                    {{ form_errors(f) }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
                 </form>
@@ -113,6 +122,15 @@ $(function(){
                                 </div>
                             </div>
                         </div>
+                        <div class="extra-form">
+                        {% for f in searchOrderForm.getIterator %}
+                                {% if f.vars.name matches '[^plg*]' %}
+                                    {{ form_label(f) }}
+                                    {{ form_widget(f) }}
+                                    {{ form_errors(f) }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -138,6 +156,15 @@ $(function(){
                                         <svg class="cb cb-angle-right"> <use xlink:href="#cb-angle-right" /></svg>
                                     </div>
                                 </a><!-- /.item_box -->
+                                <div class="extra-form">
+                                {% for f in searchProductForm.getIterator %}
+                                        {% if f.vars.name matches '[^plg*]' %}
+                                            {{ form_label(f) }}
+                                            {{ form_widget(f) }}
+                                            {{ form_errors(f) }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                                 <a href="" class="item_box tr shop-member-detail">
                                     <div class="icon td"><svg class="cb cb-users"><use xlink:href="#cb-users" /></svg></div>
                                     <div class="item_number text-left td">{{ countCustomers|number_format }}<div class="small">会員数</div></div>
@@ -145,6 +172,15 @@ $(function(){
                                         <svg class="cb cb-angle-right"> <use xlink:href="#cb-angle-right" /></svg>
                                     </div>
                                 </a><!-- /.item_box -->
+                                <div class="extra-form">
+                                {% for f in searchCustomerForm.getIterator %}
+                                        {% if f.vars.name matches '[^plg*]' %}
+                                            {{ form_label(f) }}
+                                            {{ form_widget(f) }}
+                                            {{ form_errors(f) }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div><!-- /.box-body -->
