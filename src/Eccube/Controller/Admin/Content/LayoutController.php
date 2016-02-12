@@ -25,6 +25,8 @@
 namespace Eccube\Controller\Admin\Content;
 
 use Eccube\Application;
+use Eccube\Event\EccubeEvents;
+use Eccube\Event\EventArgs;
 use Symfony\Component\HttpFoundation\Request;
 
 class LayoutController
@@ -52,6 +54,15 @@ class LayoutController
             ->getForm();
         $listForm->get('layout')->setData($TargetPageLayout);
 
+        $event = new EventArgs(
+            array(
+                'form' => $listForm,
+                'TargetPageLayout' => $TargetPageLayout,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_LAYOUT_INDEX_LIST_INITIALIZE, $event);
+
         // 未使用ブロックの取得
         $unusedBlocks = $app['eccube.repository.page_layout']->findUnusedBlocks($DeviceType, $id);
         foreach ($unusedBlocks as $unusedBlock) {
@@ -70,6 +81,18 @@ class LayoutController
         $form = $app['form.factory']
             ->createBuilder()
             ->getForm();
+
+        $event = new EventArgs(
+            array(
+                'form' => $form,
+                'TargetPageLayout' => $TargetPageLayout,
+                'origTargetPageLayout' => $OrigTargetPageLayout,
+                'blocks' => $Blocks,
+                'unuseBlocks' => $unusedBlocks,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_LAYOUT_INDEX_INITIALIZE, $event);
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
@@ -157,6 +180,27 @@ class LayoutController
                         return $app->redirect($app->url('homepage')."user_data/".$OrigTargetPageLayout->getUrl().'?preview=1');
                     }
                 } else {
+                    $event = new EventArgs(
+                        array(
+                            'form' => $listForm,
+                            'TargetPageLayout' => $TargetPageLayout,
+                        ),
+                        $request
+                    );
+                    $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_LAYOUT_INDEX_LIST_COMPLETE, $event);
+
+                    $event = new EventArgs(
+                        array(
+                            'form' => $form,
+                            'TargetPageLayout' => $TargetPageLayout,
+                            'origTargetPageLayout' => $OrigTargetPageLayout,
+                            'blocks' => $Blocks,
+                            'unuseBlocks' => $unusedBlocks,
+                        ),
+                        $request
+                    );
+                    $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_LAYOUT_INDEX_COMPLETE, $event);
+
                     $app->addSuccess('admin.register.complete', 'admin');
                     return $app->redirect($app->url('admin_content_layout_edit', array('id' => $id)));
                 }
