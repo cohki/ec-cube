@@ -50,7 +50,7 @@ class BlockController extends AbstractController
             ),
             $request
         );
-        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_BLOCK_INDEX_COMPLETE, $event);
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_BLOCK_INDEX_INITIALIZE, $event);
 
         return $app->render('Content/block.twig', array(
             'Blocks' => $Blocks,
@@ -156,6 +156,14 @@ class BlockController extends AbstractController
                 'id' => $id,
                 'DeviceType' => $DeviceType
             ));
+
+        $event = new EventArgs(
+            array(
+                'block' => $Block,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_BLOCK_DELETE_INITIALIZE, $event);
 
         if (!$Block) {
             $app->deleteMessage();
