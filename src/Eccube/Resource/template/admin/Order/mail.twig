@@ -62,15 +62,15 @@ $(function() {
 {% block main %}
 
 {% if MailHistories %}
-<div class="row">
-    <div class="col-md-9">
-        <div class="box">
-            <div class="box-header">
+<div id="history_box" class="row">
+    <div id="history_box_main" class="col-md-9">
+        <div id="history_box_main__content" class="box">
+            <div id="content_box__header" class="box-header">
                 <h3 class="box-title">メール配信履歴</h3>
             </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-                <div class="table_list">
-                    <div class="table-responsive with-border">
+            <div id="content_box__body" class="box-body no-padding">
+                <div id="content_box__list" class="table_list">
+                    <div id="content_box__menu" class="table-responsive with-border">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -96,38 +96,38 @@ $(function() {
     </div><!-- /.col --> 
 </div>
 {% endif %}
-<div class="row">
-    <div class="col-md-9">
+<div id="mail_box" class="row">
+    <div id="mail_box_main" class="col-md-9">
         <form id="order-mail-form" class="form-horizontal" method="post" action="{{ url('admin_order_mail', {id : Order.id}) }}">
         {{ form_widget(form._token) }}
         <input id="mode" type="hidden" name="mode">
-        <div class="box">
-            <div class="box-header">
+        <div id="mail_box_main__content" class="box">
+            <div id="content_box__header" class="box-header">
                 <h3 class="box-title">メール配信</h3>
             </div><!-- /.box-header -->
-            <div class="box-body">
-                <div class="form-group">
+            <div id="content_box__body" class="box-body">
+                <div id="content_box__template" class="form-group">
                     {{ form_label(form.template) }}
                     <div class="col-sm-9 col-lg-10">
                         {{ form_widget(form.template, {'id': 'template-change'}) }}
                         {{ form_errors(form.template) }}
                     </div>
                 </div>
-                <div class="form-group">
+                <div id="content_box__subject" class="form-group">
                     {{ form_label(form.subject) }}
                     <div class="col-sm-9 col-lg-10">
                         {{ form_widget(form.subject) }}
                         {{ form_errors(form.subject) }}
                     </div>
                 </div>
-                <div class="form-group">
+                <div id="content_box__header" class="form-group">
                     {{ form_label(form.header) }}
                     <div class="col-sm-9 col-lg-10">
                         {{ form_widget(form.header, {'attr': {'rows': '7'}}) }}
                         {{ form_errors(form.header) }}
                     </div>
                 </div>
-                <div class="form-group">
+                <div id="content_box__footer" class="form-group">
                     {{ form_label(form.footer) }}
                     <div class="col-sm-9 col-lg-10">
                         {{ form_widget(form.footer, {'attr': {'rows': '7'}}) }}
@@ -136,8 +136,8 @@ $(function() {
                 </div>
             </div><!-- /.box-body -->
         </div><!-- /.box -->
-        <div class="row">
-            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 text-center btn_area">
+        <div id="mail_box_main__footer" class="row">
+            <div id="button_box__send" class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 text-center btn_area">
                 <button type="submit" class="btn btn-primary btn-lg" name="mode" value="confirm">送信内容を確認</button>
                 <p><a href="{{ url('admin_order') }}">検索結果へ戻る</a></p>
             </div>
