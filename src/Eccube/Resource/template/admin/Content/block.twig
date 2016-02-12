@@ -75,16 +75,16 @@
                                         </div>
                                     </div><!-- /.item_box -->
                                 {% endfor %}
-                                <div class="extra-form">
-                                {% for f in form.getIterator %}
-                                        {% if f.vars.name matches '[^plg*]' %}
-                                            {{ form_label(f) }}
-                                            {{ form_widget(f) }}
-                                            {{ form_errors(f) }}
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
                             </div>
+                        </div>
+                        <div class="extra-form">
+                        {% for f in form.getIterator %}
+                                {% if f.vars.name matches '[^plg*]' %}
+                                    {{ form_label(f) }}
+                                    {{ form_widget(f) }}
+                                    {{ form_errors(f) }}
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
