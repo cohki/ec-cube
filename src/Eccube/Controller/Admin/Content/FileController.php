@@ -166,6 +166,12 @@ class FileController extends AbstractController
 
     public function delete(Application $app, Request $request)
     {
+        $event = new EventArgs(
+            array(
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_FILE_DELETE_INITIALIZE, $event);
 
         $this->isTokenValid($app);
 
@@ -182,6 +188,13 @@ class FileController extends AbstractController
 
     public function download(Application $app, Request $request)
     {
+        $event = new EventArgs(
+            array(
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_FILE_DOWNLOAD_INITIALIZE, $event);
+
         $topDir = $app['config']['user_data_realdir'];
         $file = $this->convertStrToServer($request->get('select_file'));
         if ($this->checkDir($file, $topDir)) {
